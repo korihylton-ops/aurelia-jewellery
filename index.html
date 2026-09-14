@@ -270,6 +270,7 @@
   const { animate, stagger } = Motion;
   animate('.hero-text > *', { opacity: [0, 1], y: [18, 0] }, { delay: stagger(0.15), duration: 1, easing: 'ease-out' });
   animate('.hero-photo img', { scale: [1.08, 1] }, { duration: 1.6, easing: 'ease-out' });
+  setTimeout(() => { document.querySelectorAll('.hero-text > *').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; }); document.querySelector('.hero-photo img').style.transform = 'scale(1)'; }, 2000);
 
   const nav=document.getElementById('nav');
   window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>50));
