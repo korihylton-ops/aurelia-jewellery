@@ -1,0 +1,16 @@
+services:
+  site:
+    build: .
+    container_name: aurelia-jewellery
+    restart: unless-stopped
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.aurelia-jewellery.rule=Host(`jewellery.intellisystemsagency.com`)"
+      - "traefik.http.routers.aurelia-jewellery.entrypoints=websecure"
+      - "traefik.http.routers.aurelia-jewellery.tls.certresolver=le"
+      - "traefik.http.services.aurelia-jewellery.loadbalancer.server.port=80"
+networks:
+  traefik:
+    external: true

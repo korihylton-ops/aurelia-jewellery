@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurelia | Fine Jewellery, Melbourne</title>
+<meta name="description" content="Aurelia — handcrafted fine jewellery and bespoke commissions in Melbourne. Engagement rings, custom pieces, in-house repairs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#221f1a; --gold:#a8863f; --gold-light:#cbaa6b; --ivory:#faf7f2;
+    --white:#ffffff; --line:#e4ddd0; --gray-500:#a89f8f; --gray-700:#5c5548;
+    --font-h:'Cormorant Garamond',serif; --font-b:'Jost',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--font-b);font-weight:300;color:var(--ink);background:var(--ivory);line-height:1.7;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  section{padding:7rem 1.5rem;}
+  .wrap{max-width:1200px;margin:0 auto;}
+  h1,h2,h3{font-family:var(--font-h);font-weight:500;line-height:1.1;}
+  .eyebrow{color:var(--gold);font-weight:500;letter-spacing:4px;text-transform:uppercase;font-size:0.72rem;margin-bottom:1.2rem;}
+  [data-anchor]{scroll-margin-top:90px;}
+
+  .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.6rem 1.5rem;transition:all .3s;}
+  .nav.scrolled{background:var(--ivory);box-shadow:0 1px 0 var(--line);}
+  .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo{font-family:var(--font-h);font-size:1.9rem;letter-spacing:2px;color:var(--ink);}
+  .nav-links{display:flex;gap:2.5rem;list-style:none;}
+  .nav-links a{color:var(--ink);font-weight:400;font-size:0.82rem;letter-spacing:1.5px;text-transform:uppercase;}
+  .nav-cta{border:1px solid var(--ink);color:var(--ink)!important;padding:0.7rem 1.6rem;font-size:0.78rem;letter-spacing:1.5px;text-transform:uppercase;}
+  .mobile-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
+  .mobile-toggle span{width:24px;height:1px;background:var(--ink);}
+  .mobile-menu{display:none;position:fixed;inset:0;background:var(--ivory);z-index:200;flex-direction:column;align-items:center;justify-content:center;gap:2rem;}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{color:var(--ink);font-size:1.5rem;font-family:var(--font-h);}
+  .mobile-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:var(--ink);font-size:2rem;cursor:pointer;}
+
+  /* Asymmetric editorial hero */
+  .hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:stretch;}
+  .hero-text{display:flex;flex-direction:column;justify-content:center;padding:8rem 4rem 3rem 6%;}
+  .hero-photo{position:relative;overflow:hidden;}
+  .hero-photo img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+  .hero h1{font-size:clamp(2.6rem,5.5vw,4.6rem);font-weight:500;margin-bottom:1.6rem;}
+  .hero h1 em{font-style:italic;color:var(--gold);}
+  .hero p{font-size:1.05rem;color:var(--gray-700);max-width:420px;margin-bottom:2.4rem;font-family:var(--font-b);font-weight:300;}
+  .btn-row{display:flex;gap:1.2rem;flex-wrap:wrap;}
+  .btn{padding:1rem 2.2rem;font-size:0.8rem;letter-spacing:1.5px;text-transform:uppercase;display:inline-block;transition:all .25s;font-family:var(--font-b);}
+  .btn-primary{background:var(--ink);color:var(--ivory);}
+  .btn-primary:hover{background:var(--gold);}
+  .btn-outline{border:1px solid var(--ink);color:var(--ink);}
+
+  .about{background:var(--white);}
+  .about-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:5rem;align-items:center;}
+  .about h2{font-size:2.6rem;margin-bottom:1.3rem;}
+  .about p{color:var(--gray-700);margin-bottom:1.1rem;font-size:1rem;}
+
+  /* Collections grid - product cards not services */
+  .section-head{text-align:center;max-width:600px;margin:0 auto 4rem;}
+  .section-head h2{font-size:2.6rem;}
+  .collections-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5px;background:var(--line);}
+  .collection-card{background:var(--white);text-align:center;padding-bottom:2rem;}
+  .collection-card img{aspect-ratio:1;object-fit:cover;margin-bottom:1.5rem;}
+  .collection-card h3{font-size:1.4rem;margin-bottom:0.4rem;}
+  .collection-card p{font-size:0.85rem;color:var(--gray-500);letter-spacing:1px;text-transform:uppercase;}
+
+  /* Process instead of pricing table */
+  .process{background:var(--ink);color:var(--ivory);}
+  .process .section-head h2{color:var(--ivory);}
+  .process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5rem;text-align:center;}
+  .process-num{font-family:var(--font-h);font-size:2.4rem;color:var(--gold-light);margin-bottom:1rem;}
+  .process-grid h3{font-size:1.2rem;margin-bottom:0.6rem;color:var(--ivory);}
+  .process-grid p{font-size:0.88rem;color:var(--gray-500);font-family:var(--font-b);}
+
+  .gallery-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:0.5rem;}
+  .gallery-grid img{aspect-ratio:1;object-fit:cover;}
+
+  .faq-list{max-width:760px;margin:0 auto;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{padding:1.5rem 0;font-family:var(--font-h);font-size:1.15rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+  .faq-q::after{content:'+';font-size:1.4rem;color:var(--gold);font-family:var(--font-b);}
+  .faq-item.open .faq-q::after{content:'−';}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .faq-item.open .faq-a{max-height:300px;padding-bottom:1.4rem;}
+  .faq-a p{color:var(--gray-700);font-size:0.95rem;}
+
+  .cta-banner{background:var(--gold);text-align:center;color:var(--white);}
+  .cta-banner h2{font-size:2.3rem;margin-bottom:1.2rem;}
+
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;}
+  .contact-detail{margin-bottom:1.8rem;}
+  .contact-detail h3{font-size:1rem;letter-spacing:1.5px;text-transform:uppercase;font-family:var(--font-b);color:var(--gold);margin-bottom:0.4rem;}
+  form{display:grid;gap:1.1rem;}
+  input,textarea,select{width:100%;padding:0.9rem 0;border:none;border-bottom:1px solid var(--line);font-family:var(--font-b);font-size:0.95rem;background:transparent;}
+  textarea{resize:vertical;min-height:90px;}
+  .form-btn{background:var(--ink);color:var(--ivory);border:none;padding:1rem;font-size:0.85rem;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;width:100%;margin-top:1rem;}
+
+  footer{background:var(--ivory);color:var(--gray-700);padding:3.5rem 1.5rem 1.5rem;text-align:center;font-size:0.85rem;border-top:1px solid var(--line);}
+  .footer-links{display:flex;justify-content:center;gap:2rem;margin:1.2rem 0;flex-wrap:wrap;}
+  .footer-links a{letter-spacing:1px;text-transform:uppercase;font-size:0.75rem;}
+
+  .demo-badge{position:fixed;bottom:16px;right:16px;background:var(--ink);color:var(--ivory);padding:0.6rem 1rem;font-size:0.7rem;letter-spacing:0.5px;z-index:150;box-shadow:0 4px 20px rgba(0,0,0,.15);}
+  .demo-badge a{color:var(--gold-light);font-weight:500;}
+
+  @media(max-width:900px){
+    .nav-links,.nav-cta{display:none;}
+    .mobile-toggle{display:flex;}
+    .hero{grid-template-columns:1fr;}
+    .hero-photo{height:340px;order:-1;}
+    .hero-text{padding:7rem 1.5rem 3rem;}
+    .about-grid,.contact-grid{grid-template-columns:1fr;}
+    .collections-grid,.process-grid{grid-template-columns:1fr 1fr;}
+    .gallery-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Aurelia</a>
+    <ul class="nav-links">
+      <li><a href="#collections">Collections</a></li>
+      <li><a href="#process">Bespoke</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Book a Consult</a>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">&times;</button>
+  <a href="#collections">Collections</a>
+  <a href="#process">Bespoke</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#faq">FAQ</a>
+  <a href="#contact">Book a Consult</a>
+</div>
+
+<header class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">Fine Jewellery — Melbourne</div>
+    <h1>Pieces made to be <em>kept.</em></h1>
+    <p>Handcrafted fine jewellery and bespoke commissions, made in our Melbourne studio. Engagement rings, heirloom remakes, and pieces built to outlast a trend.</p>
+    <div class="btn-row">
+      <a href="#contact" class="btn btn-primary">Book a Consult</a>
+      <a href="#collections" class="btn btn-outline">View Collections</a>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="https://images.unsplash.com/photo-1622398925373-3f91b1e275f5?w=1200&q=80" alt="Two gold rings" loading="lazy">
+  </div>
+</header>
+
+<section class="about" id="about" data-anchor>
+  <div class="wrap about-grid">
+    <img src="https://images.unsplash.com/photo-1622398925373-3f91b1e275f5?w=800&q=80" alt="Gold rings detail" loading="lazy">
+    <div>
+      <div class="eyebrow">Our Studio</div>
+      <h2>Made by hand, a few streets from here.</h2>
+      <p>Every Aurelia piece is designed and made in our Melbourne studio — not sourced from a catalogue. We work in recycled gold and ethically sourced stones, and every commission starts with a conversation, not a price list.</p>
+      <p>From a single engagement ring to a full remake of an inherited piece, the process is the same: sketch, refine, cast, finish — by hand, start to end.</p>
+    </div>
+  </div>
+</section>
+
+<section id="collections" data-anchor>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Shop</div>
+      <h2>Collections</h2>
+    </div>
+    <div class="collections-grid">
+      <div class="collection-card"><img src="https://images.unsplash.com/photo-1622398925373-3f91b1e275f5?w=500&q=75" alt="Engagement rings collection" loading="lazy"><h3>Engagement</h3><p>From $2,400</p></div>
+      <div class="collection-card"><img src="https://images.unsplash.com/photo-1622398925373-3f91b1e275f5?w=500&q=75" alt="Everyday fine jewellery collection" loading="lazy"><h3>Everyday Fine</h3><p>From $380</p></div>
+      <div class="collection-card"><img src="https://images.unsplash.com/photo-1622398925373-3f91b1e275f5?w=500&q=75" alt="Bespoke commissions collection" loading="lazy"><h3>Bespoke</h3><p>Priced on consult</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process" data-anchor>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" style="color:var(--gold-light);">Bespoke Commissions</div>
+      <h2>How a Piece Gets Made</h2>
+    </div>
+    <div class="process-grid">
+      <div><div class="process-num">01</div><h3>Consult</h3><p>A conversation about the piece, budget and timeline.</p></div>
+      <div><div class="process-num">02</div><h3>Design</h3><p>Hand-sketched concepts, refined until it's right.</p></div>
+      <div><div class="process-num">03</div><h3>Craft</h3><p>Cast, set and finished by hand in our studio.</p></div>
+      <div><div class="process-num">04</div><h3>Deliver</h3><p>Fitted and finished, with a lifetime care plan.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" data-anchor style="background:var(--white);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">The Work</div>
+      <h2>Gallery</h2>
+    </div>
+    <div class="gallery-grid">
+      <img src="https://images.unsplash.com/photo-1622398925373-3f91b1e275f5?w=800&q=75" alt="Gold rings close up" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1622398925373-3f91b1e275f5?w=500&q=75" alt="Ring detail" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1622398925373-3f91b1e275f5?w=500&q=75" alt="Studio bench work" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq" data-anchor>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Questions</div>
+      <h2>Good to Know</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q">How long does a bespoke commission take?</div><div class="faq-a"><p>Typically 6-10 weeks from consult to collection, depending on complexity and stone sourcing.</p></div></div>
+      <div class="faq-item"><div class="faq-q">Do you offer resizing and repairs?</div><div class="faq-a"><p>Yes, in-house for any Aurelia piece, and most other jewellery too — bring it in for a free assessment.</p></div></div>
+      <div class="faq-item"><div class="faq-q">Where do your stones come from?</div><div class="faq-a"><p>All diamonds are conflict-free and traceable; coloured stones are sourced from small, vetted suppliers.</p></div></div>
+      <div class="faq-item"><div class="faq-q">Can you remake an inherited piece?</div><div class="faq-a"><p>Yes — this is one of our most requested commissions. Bring the piece in and we'll talk through options.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="wrap">
+    <h2>Start your piece with a consult.</h2>
+    <a href="#contact" class="btn btn-outline" style="border-color:var(--white);color:var(--white);">Book a Consult</a>
+  </div>
+</section>
+
+<section id="contact" data-anchor style="background:var(--white);">
+  <div class="wrap contact-grid">
+    <div>
+      <div class="eyebrow">Visit or Enquire</div>
+      <div class="contact-detail"><h3>Studio</h3><p>18 Flinders Lane, Melbourne VIC</p></div>
+      <div class="contact-detail"><h3>Phone</h3><p>(03) 5550 7788</p></div>
+      <div class="contact-detail"><h3>Hours</h3><p>Tue–Sat, 10am–5pm, by appointment</p></div>
+    </div>
+    <form action="https://formsubmit.co/example@aurelia.com.au" method="POST">
+      <input type="text" name="name" placeholder="Full name" required>
+      <input type="email" name="email" placeholder="Email address" required>
+      <select name="interest"><option value="">I'm interested in...</option><option>Engagement Ring</option><option>Bespoke Commission</option><option>Repair / Resizing</option><option>Other</option></select>
+      <textarea name="details" placeholder="Tell us about your piece..."></textarea>
+      <button type="submit" class="form-btn">Book a Consult</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="nav-logo" style="justify-content:center;">Aurelia</div>
+  <div class="footer-links">
+    <a href="#collections">Collections</a><a href="#process">Bespoke</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a><a href="/admin.html">Admin</a>
+  </div>
+  <p>&copy; 2026 Aurelia Fine Jewellery. 18 Flinders Lane, Melbourne VIC.</p>
+</footer>
+
+<div class="demo-badge">Example build by <a href="https://intellisystemsagency.com" target="_blank">Intellisystems</a></div>
+
+<script>
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>50));
+  document.getElementById('mobileToggle').onclick=()=>document.getElementById('mobileMenu').classList.add('open');
+  document.getElementById('mobileClose').onclick=()=>document.getElementById('mobileMenu').classList.remove('open');
+  document.querySelectorAll('.mobile-menu a').forEach(a=>a.onclick=()=>document.getElementById('mobileMenu').classList.remove('open'));
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.querySelector('.faq-q').onclick=()=>{
+      const isOpen=item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!isOpen)item.classList.add('open');
+    };
+  });
+</script>
+</body>
+</html>
